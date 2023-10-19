@@ -7,7 +7,14 @@ const login = require('./routes/login');
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use('login', login)
+
+// Rota para a página de login
+app.get('/login', (req, res) => {
+  res.send('Esta é a página de login.');
+});
+
+// Configure a rota para o login
+app.use('/api/login', login);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
