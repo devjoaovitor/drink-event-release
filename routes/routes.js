@@ -5,6 +5,24 @@ const auth = require('../auth/auth');
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 
+router.get('/teste', async (req, res) => {
+    const client = getClient();
+  
+    try {
+      await client.connect();
+      const query = 'SELECT * FROM usuarios';
+      const result = await client.query(query);
+  
+      // Retorna os usuários como resposta
+      res.status(200).json(result.rows);
+    } catch (error) {
+      console.error('Erro ao buscar usuários:', error);
+      res.status(500).json({ error: 'Erro ao buscar usuários.' });
+    } finally {
+      await client.end();
+    }
+  });
+
 router.post('/auth/login', async (req, res) => {
     const { email, senha } = req.body;
   
