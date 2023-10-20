@@ -18,6 +18,9 @@ app.use(cors({
 }));
 app.use(bodyParser.json());
 app.use('/api', routes);
+
+app.use('/teste', require('./routes/routes'));
+
 app.listen(port, () => {
   console.log(`Servidor está rodando na porta ${port}`);
 });
