@@ -1,8 +1,6 @@
 const { getClient } = require('../config/db');
 
 async function autenticarUsuario(email, senha) {
-  console.log('Email recebido:', email);
-  console.log('Senha recebida:', senha);
 
   const client = getClient();
 

@@ -1,23 +1,25 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const routes = require('./routes/routes');
 const app = express();
 const port = process.env.PORT || 3000;
-const login = require('./routes/login');
 
-app.use(cors());
+const allowedOrigins = ['https://drink-event-release-front.vercel.app'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Acesso não permitido por CORS'));
+    }
+  },
+}));
 app.use(bodyParser.json());
-
-// Rota para a página de login
-app.get('/login', (req, res) => {
-  res.send('Esta é a página de login.');
-});
-
-// Configure a rota para o login
-app.use('/api/login', login);
-
+app.use('/api', routes);
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Servidor está rodando na porta ${port}`);
 });
 
 module.exports = app;
